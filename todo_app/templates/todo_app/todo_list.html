@@ -1,0 +1,39 @@
+{% extends 'todo_app/base.html' %}
+{% block title %}My Todos{% endblock %}
+{% block content %}
+<h2>My Todos</h2>
+<a href="{% url 'todo_create' %}" class="btn btn-primary mb-3">Create New Todo</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Due Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for todo in todos %}
+        <tr>
+            <td>{{ todo.title }}</td>
+            <td>{{ todo.get_status_display }}</td>
+            <td>{{ todo.get_priority_display }}</td>
+                {% if todo.due_date %}
+                    {{ todo.due_date|date:"M d, Y" }}
+                {% else %}
+                    N/A
+                {% endif %}
+            <td>
+                <a href="{% url 'todo_update' todo.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="{% url 'todo_delete' todo.pk %}" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No todos yet.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
