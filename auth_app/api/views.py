@@ -27,9 +27,8 @@ class RegistrationView(APIView):
             return Response(data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 class LoginView(TokenObtainPairView):
-    """Login using username and password; returns JWTs in response body."""
+    """Login using username and password; returns JWTs in cookies."""
     serializer_class = CustomTokenObtainPairSerializer
 
     def post(self, request, *args, **kwargs):
@@ -37,7 +36,6 @@ class LoginView(TokenObtainPairView):
         serializer.is_valid(raise_exception=True)
 
         tokens = serializer.validated_data
-        # fetch user for response payload
         username = request.data.get('username')
         user = None
         if username:
@@ -49,10 +47,32 @@ class LoginView(TokenObtainPairView):
         response = Response({
             "detail": "Login successful",
             "user": {"id": user.id, "username": user.username} if user else {},
-            "tokens": tokens,
         })
 
+        # Tokens in HTTP-Only Cookies setzen
+        access_token = tokens.get("access")
+        refresh_token = tokens.get("refresh")
+
+        # Access Token
+        response.set_cookie(
+            key="access_token",
+            value=access_token,
+            httponly=True,
+            secure=False,
+            samesite='Lax',
+        )
+
+        # Refresh Token
+        response.set_cookie(
+            key="refresh_token",
+            value=refresh_token,
+            httponly=True,
+            secure=False,
+            samesite='Lax',
+        )
+
         return response
+
 
 
 class LogoutView(APIView):
