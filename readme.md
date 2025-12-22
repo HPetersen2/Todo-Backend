@@ -123,11 +123,11 @@ In addition to the template-based views, the project provides a RESTful API buil
 
 | Method | Endpoint       | Description            |
 | ------ | -------------- | ---------------------- |
-| GET    | `/todos/`      | List all todos         |
-| POST   | `/todos/`      | Create a new todo      |
-| GET    | `/todos/<id>/` | Retrieve a single todo |
-| PUT    | `/todos/<id>/` | Update a todo          |
-| DELETE | `/todos/<id>/` | Delete a todo          |
+| GET    | `/api/todos/`      | List all todos         |
+| POST   | `/api/todos/`      | Create a new todo      |
+| GET    | `/api/todos/<id>/` | Retrieve a single todo |
+| PUT    | `/api/todos/<id>/` | Update a todo          |
+| DELETE | `/api/todos/<id>/` | Delete a todo          |
 
 The endpoints are defined as:
 
