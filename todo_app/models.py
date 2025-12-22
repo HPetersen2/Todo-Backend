@@ -29,8 +29,8 @@ class Todo(models.Model):
         default=Priority.MEDIUM
     )
 
-    due_date = models.DateTimeField(null=True, blank=True)
-    completed_at = models.DateTimeField(null=True, blank=True)
+    due_date = models.DateField(null=True, blank=True)
+    completed_at = models.DateField(null=True, blank=True)
 
     creator = models.ForeignKey(
         User,
