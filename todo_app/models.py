@@ -4,13 +4,22 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 class Todo(models.Model):
+    """
+    Represents a todo item with status, priority, scheduling, and ownership metadata.
+    """
 
     class Status(models.TextChoices):
+        """
+        Defines the available lifecycle states for a todo item.
+        """
         OPEN = "open", "Open"
         IN_PROGRESS = "in_progress", "In Progress"
         DONE = "done", "Done"
 
     class Priority(models.IntegerChoices):
+        """
+        Defines the priority levels that can be assigned to a todo item.
+        """
         LOW = 1, "Low"
         MEDIUM = 2, "Medium"
         HIGH = 3, "High"
@@ -42,4 +51,8 @@ class Todo(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
+        """
+        Returns a human-readable representation including status, title, and creator.
+        """
         return f"[{self.get_status_display()}] {self.title} – {self.creator.username}"
+

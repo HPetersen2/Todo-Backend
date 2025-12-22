@@ -8,9 +8,15 @@ class TodoListCreateView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticatedWithCookie]
 
     def get_queryset(self):
+        """
+        Returns a queryset containing only todo items created by the authenticated user.
+        """
         return Todo.objects.filter(creator=self.request.user)
 
     def perform_create(self, serializer):
+        """
+        Persists a new todo item while assigning the authenticated user as its creator.
+        """
         serializer.save(creator=self.request.user)
 
 class TodoDetailView(generics.RetrieveUpdateDestroyAPIView):
@@ -18,4 +24,7 @@ class TodoDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticatedWithCookie]
 
     def get_queryset(self):
+        """
+        Restricts access to todo items so that only those owned by the authenticated user are exposed.
+        """
         return Todo.objects.filter(creator=self.request.user)

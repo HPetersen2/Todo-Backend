@@ -49,11 +49,9 @@ class LoginView(TokenObtainPairView):
             "user": {"id": user.id, "username": user.username} if user else {},
         })
 
-        # Tokens in HTTP-Only Cookies setzen
         access_token = tokens.get("access")
         refresh_token = tokens.get("refresh")
 
-        # Access Token
         response.set_cookie(
             key="access_token",
             value=access_token,
@@ -62,7 +60,6 @@ class LoginView(TokenObtainPairView):
             samesite='Lax',
         )
 
-        # Refresh Token
         response.set_cookie(
             key="refresh_token",
             value=refresh_token,
@@ -72,7 +69,6 @@ class LoginView(TokenObtainPairView):
         )
 
         return response
-
 
 
 class LogoutView(APIView):

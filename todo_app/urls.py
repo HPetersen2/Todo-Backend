@@ -1,6 +1,9 @@
 from django.urls import path
 from . import views
 
+"""
+Defines the URL routing for authentication and todo management views within the application.
+"""
 urlpatterns = [
     path('register/', views.register_view, name='register'),
     path('login/', views.login_view, name='login'),
