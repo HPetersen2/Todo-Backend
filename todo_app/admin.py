@@ -3,13 +3,8 @@ from .models import Todo
 
 class TodoAdmin(admin.ModelAdmin):
     list_display = ('title', 'status', 'priority', 'due_date', 'creator', 'created_at', 'updated_at')
-    
     list_filter = ('status', 'priority', 'due_date', 'creator')
-    
     search_fields = ('title', 'description', 'creator__username')
-    
-    fields = ('title', 'description', 'status', 'priority', 'due_date', 'completed_at', 'creator')
-    
     fieldsets = (
         (None, {
             'fields': ('title', 'description', 'status', 'priority')
